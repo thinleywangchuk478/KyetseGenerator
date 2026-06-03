@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="dz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>སྐྱེས་རྩིས་འབྲི་ས། — Kyetse Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="app-header">
+  <div class="header-inner">
+    <div>
+      <div class="header-title">༄༅། །སྐྱེས་རྩིས་འབྲི་ས།</div>
+      <div class="header-sub">Kyetse Generator</div>
+    </div>
+    <div class="header-badge" id="sheet-status">⏳ Loading Sheet…</div>
+  </div>
+</header>
+
+<!-- ════ MAIN BODY ════ -->
+<div class="app-body">
+
+  <!-- ══ LEFT: INPUT PANEL ══ -->
+  <div class="left-panel">
+
+    <!-- Personal Info -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">༄</div>
+        <div class="card-header-title">སྤྱིར་བཏང་གནས་ཚུལ།</div>
+      </div>
+      <div class="card-body">
+        <div class="form-row full">
+          <div class="field">
+            <label>བུ་/བུམོའི་མིང་།</label>
+            <input type="text" id="child-name" placeholder="མིང་བཙུགས།">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field">
+            <label>ཕའི་མིང་།</label>
+            <input type="text" id="father-name" placeholder="ཕའི་མིང་བཙུགས།">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>ཕའི་སྐྱེས་ལོ།</label>
+            <select id="father-year">
+              <option value="">ལོ་གདམ་ཁ་རྐྱབ།</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>མའི་སྐྱེས་ལོ།</label>
+            <select id="mother-year">
+              <option value="">ལོ་གདམ་ཁ་རྐྱབ།</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row triple">
+          <div class="field">
+            <label>སྐྱེས་བའི་ཉིནམ། (ཚེས)</label>
+            <select id="dob-day">
+              <option value="">ཚེས།</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>སྐྱེས་བའི་སྤྱི་ཟླ།</label>
+            <select id="dob-month">
+              <option value="">ཟླ།</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>སྐྱེས་བའི་ལོ།</label>
+            <select id="dob-year">
+              <option value="">ལོ།</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field">
+            <label>ལོ་ཚད། (གྲངས)</label>
+            <input type="number" id="child-age" placeholder="ལོ་ཚད།" min="0" max="120">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kyetse Dropdowns -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">☸</div>
+        <div class="card-header-title">སྐྱེས་རྩིས་ཀྱི་གནད་དོན།</div>
+      </div>
+      <div class="card-body">
+        <div id="loading-msg" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">
+          གཞི་གྲངས་བཞུད་བཞིན་པ། <span class="loading-dot"></span>
+        </div>
+        <div class="kyetse-grid" id="kyetse-grid" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- Section Toggles -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">✓</div>
+        <div class="card-header-title">ལུང་སྟོན་ཁག་འདེམས།</div>
+      </div>
+      <div class="card-body">
+        <div class="section-toggles" id="section-toggles"></div>
+      </div>
+    </div>
+
+    <!-- Generate Button -->
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="generateReport()" style="flex:1;justify-content:center;font-size:15px;padding:12px;">
+        ☸ སྐྱེས་རྩིས་གསར་བཟོ།
+      </button>
+      <button class="btn btn-outline" onclick="clearForm()">↺ ག་ར་བསལ།</button>
+    </div>
+
+  </div><!-- /left-panel -->
+
+  <!-- ══ RIGHT: PREVIEW PANEL ══ -->
+  <div class="right-panel">
+    <div class="card">
+      <div class="preview-toolbar">
+        <div class="preview-toolbar-title">📄 སྐྱེས་རྩིས་ཤོག་གྲངས།</div>
+        <div class="btn-row" style="margin:0">
+          <button class="btn btn-sm btn-gold" onclick="exportDOCX()">⬇ Word (.docx)</button>
+          <button class="btn btn-sm btn-outline" onclick="window.print()">🖨 Print</button>
+          <button class="btn btn-sm btn-green" onclick="saveReport()">💾 Save</button>
+        </div>
+      </div>
+      <div class="preview-body">
+        <div id="report-doc">
+          <div class="report-empty">
+            <div class="report-empty-icon">༄༅</div>
+            <div>སྐྱེས་རྩིས་ཀྱི་གནད་དོན་གདམ་ཁ་<br>སྐྱེས་རྩིས་གསརཔ་བཟོ།</div>
+          </div>
+        </div>
+      </div>
+      <div class="status-bar" id="status-bar"></div>
+    </div>
+
+    <!-- Saved Reports -->
+    <div class="card" id="saved-card" style="display:none">
+      <div class="card-header">
+        <div class="card-header-icon">📁</div>
+        <div class="card-header-title">སྔོན་གྱི་སྐྱེས་རྩིས།</div>
+      </div>
+      <div class="card-body">
+        <div class="saved-list" id="saved-list"></div>
+      </div>
+    </div>
+
+  </div><!-- /right-panel -->
+
+</div><!-- /app-body -->
+
+<!-- App logic -->
+<script src="app.js"></script>
+
+</body>
+</html>

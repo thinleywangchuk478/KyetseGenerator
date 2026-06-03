@@ -1,0 +1,400 @@
+/*
+  ══════════════════════════════════════════════════════════
+  SELF-HOSTED FONTS — works on all devices without internet
+  ══════════════════════════════════════════════════════════
+  Place these files in the /fonts/ folder next to style.css:
+    fonts/NotoSerifTibetan-Regular.woff2
+    fonts/NotoSerifTibetan-SemiBold.woff2
+    fonts/NotoSerifTibetan-Bold.woff2
+
+  Download all three from:
+  https://github.com/notofonts/tibetan/tree/main/fonts/NotoSerifTibetan/unhinted/variable-ttf
+  (Download NotoSerifTibetan[wght].ttf, then convert to woff2 at https://cloudconvert.com/ttf-to-woff2)
+
+  OR — quickest option: download the pre-built woff2 files from jsDelivr CDN:
+  https://cdn.jsdelivr.net/fontsource/fonts/noto-serif-tibetan@latest/tibetan-400-normal.woff2  → rename to NotoSerifTibetan-Regular.woff2
+  https://cdn.jsdelivr.net/fontsource/fonts/noto-serif-tibetan@latest/tibetan-600-normal.woff2  → rename to NotoSerifTibetan-SemiBold.woff2
+  https://cdn.jsdelivr.net/fontsource/fonts/noto-serif-tibetan@latest/tibetan-700-normal.woff2  → rename to NotoSerifTibetan-Bold.woff2
+  ══════════════════════════════════════════════════════════
+*/
+
+@font-face {
+  font-family: 'Jomolhari';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Jomolhari.ttf') format('truetype');
+  unicode-range: U+0F00-0FFF, U+0000-00FF, U+2000-206F;
+}
+
+@font-face {
+  font-family: 'Jomolhari';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Jomolhari.ttf') format('truetype');
+  unicode-range: U+0F00-0FFF, U+0000-00FF, U+2000-206F;
+}
+
+@font-face {
+  font-family: 'Jomolhari';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/Jomolhari.ttf') format('truetype');
+  unicode-range: U+0F00-0FFF, U+0000-00FF, U+2000-206F;
+}
+
+:root {
+  --maroon: #6B1A1A;
+  --gold: #C9922A;
+  --gold-light: #F5E6C8;
+  --gold-pale: #FDF7EC;
+  --cream: #FAF6EE;
+  --dark: #1C1008;
+  --muted: #7A6A50;
+  --border: #D9C9A3;
+  --white: #FFFFFF;
+  --green: #2E6B3E;
+  --red: #8B1A1A;
+  --section-bg: #FEF9F0;
+  --shadow: 0 2px 12px rgba(107,26,26,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Jomolhari', serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.app-header {
+  background: linear-gradient(135deg, var(--maroon) 0%, #036a93 100%);
+  color: var(--gold-light);
+  padding: 0;
+  border-bottom: 3px solid var(--gold);
+}
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.header-title { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+.header-sub { font-size: 13px; color: var(--gold); margin-top: 2px; }
+.header-badge {
+  background: var(--gold);
+  color: var(--maroon);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Layout ── */
+.app-body {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.card-header {
+  background: var(--gold-pale);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-header-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--maroon);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.card-header-title { font-size: 15px; font-weight: 700; color: var(--maroon); }
+.card-body { padding: 18px; }
+
+/* ── Form Fields ── */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row.full { grid-template-columns: 1fr; }
+.form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.field input, .field select {
+  font-family: 'Jomolhari', serif;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: var(--white);
+  color: var(--dark);
+  outline: none;
+  transition: border 0.2s;
+}
+.field input:focus, .field select:focus { border-color: var(--maroon); }
+.field select { cursor: pointer; }
+
+/* ── Kyetse Dropdowns ── */
+.kyetse-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.kyetse-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kyetse-field label {
+  font-size: 12px;
+  color: var(--maroon);
+  font-weight: 700;
+}
+.kyetse-field select {
+  font-family: 'Jomolhari', serif;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 8px;
+  background: var(--section-bg);
+  color: var(--dark);
+  outline: none;
+  transition: border 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.kyetse-field select:focus { border-color: var(--gold); background: #FFF8EC; }
+.kyetse-field select.selected { border-color: var(--green); background: #F0FAF3; }
+
+/* ── Hint box ── */
+.hint-box {
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--gold-pale);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  padding: 4px 8px;
+  margin-top: 2px;
+  display: none;
+  line-height: 1.5;
+}
+.hint-box.show { display: block; }
+
+/* ── Buttons ── */
+.btn {
+  font-family: 'Jomolhari', serif;
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { opacity: 0.88; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--maroon); color: var(--gold-light); }
+.btn-gold { background: var(--gold); color: var(--maroon); }
+.btn-outline { background: transparent; color: var(--maroon); border: 1.5px solid var(--maroon); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-sm { font-size: 12px; padding: 6px 12px; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+/* ── Preview Panel ── */
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--gold-pale);
+  border-bottom: 1px solid var(--border);
+}
+.preview-toolbar-title { font-size: 14px; font-weight: 700; color: var(--maroon); }
+
+.preview-body {
+  padding: 24px 28px;
+  min-height: 500px;
+  background: var(--white);
+}
+
+/* ── Report Document ── */
+#report-doc {
+  font-family: 'Jomolhari', serif;
+  color: var(--dark);
+  line-height: 1.9;
+}
+.report-header-block {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--gold);
+}
+.report-mangalam { font-size: 18px; color: var(--maroon); font-weight: 700; margin-bottom: 4px; }
+.report-title { font-size: 22px; font-weight: 700; color: var(--maroon); }
+.report-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+.report-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.report-info-table td { padding: 5px 8px; vertical-align: top; }
+.report-info-table td:first-child { color: var(--muted); width: 45%; font-weight: 600; }
+.report-info-table tr { border-bottom: 1px dashed var(--border); }
+
+.report-section {
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.report-section-header {
+  background: var(--gold-pale);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.report-section-label { font-size: 13px; font-weight: 700; color: var(--maroon); }
+.report-section-value { font-size: 12px; color: var(--gold); background: var(--maroon); padding: 2px 8px; border-radius: 10px; }
+.report-section-body {
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--dark);
+  outline: none;
+}
+.report-section-body[contenteditable="true"]:focus {
+  background: #FFFDF5;
+}
+
+.report-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.report-empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+
+.report-footer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 2px solid var(--gold);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── Section toggle checkboxes ── */
+.section-toggles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--dark);
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--section-bg);
+  transition: background 0.15s;
+}
+.toggle-item:hover { background: var(--gold-pale); }
+.toggle-item input[type="checkbox"] { accent-color: var(--maroon); cursor: pointer; }
+
+/* ── Status bar ── */
+.status-bar {
+  font-size: 12px;
+  color: var(--green);
+  padding: 6px 14px;
+  background: #EDF7F0;
+  border-top: 1px solid #B8DEC6;
+  border-radius: 0 0 10px 10px;
+  display: none;
+}
+.status-bar.show { display: block; }
+
+/* ── Saved Reports ── */
+.saved-list { display: flex; flex-direction: column; gap: 8px; }
+.saved-item {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--section-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+.saved-item-info { flex: 1; }
+.saved-item-name { font-weight: 700; color: var(--maroon); }
+.saved-item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── Loading spinner ── */
+.loading-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 1s infinite;
+  margin-left: 6px;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── Print styles ── */
+@media print {
+  .left-panel, .preview-toolbar, .app-header, .btn-row, .section-toggles { display: none !important; }
+  .app-body { display: block; padding: 0; }
+  .card { box-shadow: none; border: none; }
+  .preview-body { padding: 0; }
+  #report-doc { font-size: 14px; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 860px) {
+  .app-body { grid-template-columns: 1fr; }
+  .form-row.triple { grid-template-columns: 1fr 1fr; }
+  .kyetse-grid { grid-template-columns: 1fr; }
+}
