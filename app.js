@@ -279,7 +279,55 @@ function anyKyetseSelected() {
   });
 }
 
-/* ══ Generate Report ══ */
+/* ══ Section labels for flowing prose headers (matches PDF template) ══ */
+const SECTION_PROSE_LABELS = {
+  lo:       'དང་པོ་ལོའི་འབྲས་བུ་བཤད་པ།',
+  dawa:     'གཉིས་པ་ཟླ་བའི་འབྲས་བུ་བཤད་པ།',
+  zhag:     'གསུམ་པ་ཞག་གམ་ཉི་མའི་འབྲས་བུ་བཤད་པ།',
+  dus:      'བཞི་པ་དུས་ཚོད་འབྲས་བུ་བཤད་པ།',
+  karma:    'ལྔ་པ་སྐྱེ་བརྟག་འཁོར་ལོའི་འབྲས་བུ་བཤད་པ།',
+  reza:     'དྲུག་པ་རེས་གཟའི་འབྲས་བུ་བཤད་པ།',
+  skar:     'བདུན་པ་སྐར་མའི་འབྲས་བུ་བཤད་པ།',
+  dusjor:   'བརྒྱད་པ་དུས་སྦྱོར་འབྲས་བུ་བཤད་པ།',
+  tatkal:   'དགུ་པ་ཏཏྐལ་འབྲས་བུ་བཤད་པ།',
+  tendrel:  'བཅུ་པ་རྟེན་འབྲེལ་འབྲས་བུ་བཤད་པ།',
+  tshe:     'བཅུ་གཅིག་པ་ཚེས་གྲངས་འབྲས་བུ་བཤད་པ།',
+  phama:    'བཅུ་གཉིས་པ་ཕ་མ་མཐུན་སྦྱོར་འབྲས་བུ་བཤད་པ།',
+  parkha:   'བཅུ་གསུམ་པ་སྤར་ཁའི་འབྲས་བུ་བཤད་པ།',
+  sme:      'བཅུ་བཞི་སྨེ་བའི་འབྲས་བུ་བཤད་པ།',
+  khandro:  'བཅོ་ལྔ་མཁའ་འགྲོའི་འབྲས་བུ་བཤད་པ།'
+};
+
+/* ══ Build the opening intro sentence matching PDF template ══ */
+function buildIntroSentence(name, fatherName, fatherYear, motherYear, day, month, year, age) {
+  // e.g. "ཨོཾ་སྭ་སྟི། ... ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།
+  //       དེ་ཡང་ཕ་ས་... རང་ལོ་XX དང་མ་...རང་ལོ་XX ཁར་སོན་པ་གཉིས་ལ་བུ་..."
+  const dobPart = (day && month && year)
+    ? `ཟླ་བ་${DZ_MONTHS[month-1]}ཚེས་${DZ_DAYS[day-1]}`
+    : '';
+  const agePart = age ? `རང་ལོ་${age}` : '';
+
+  let intro = `ཨོཾ་སྭ་སྟི། སྤང་རྟོགས་ཡོན་ཏན་མཆོག་གི་རྩེར་སོར་ཅིང་། །ལེགས་གསུངས་དམ་པས་ཆོས་ཀྱི་བདུད་རྩི་ཡིས། །འགྲོ་ཀུན་འཕགས་པའི་ས་ལ་དགོན་མཛད་པའི། །ངོ་མཚར་འབུམ་ལྡན་མཆོག་གསུམ་དམ་པས་སྲུངས། །སྐྱེ་དགུའི་ཡིད་ཀྱི་ཀུན་དན་བཞད་པའི་གཉེན། །འགྲོ་འདུལ་འཇམ་དབྱངས་བླ་མས་དགེ་ལེགས་སྩོལ། །ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།`;
+
+  intro += ` དེ་ཡང་`;
+  if (fatherName && fatherName !== '—') {
+    intro += `ཕ་${fatherName}་`;
+  } else {
+    intro += `ཕ་`;
+  }
+  if (fatherYear && fatherYear !== '—') intro += `ས་${fatherYear}་`;
+  if (age && age !== '—') intro += `རང་ལོ་${age}་`;
+  intro += `དང་མ་`;
+  if (motherYear && motherYear !== '—') intro += `ལྕགས་${motherYear}་`;
+  intro += `ཁར་སོན་པ་གཉིས་ལ་བུ་`;
+  if (name && name !== '—') intro += `${name}་`;
+  if (dobPart) intro += `${dobPart}་`;
+  intro += `དུས་ཚོད་ཐོག་བཙས་པའི་བུ་འདི་ཉིད།`;
+
+  return intro;
+}
+
+/* ══ Generate Report (PDF-template style: flowing prose) ══ */
 function generateReport() {
   const name       = document.getElementById('child-name').value   || '—';
   const fatherName = document.getElementById('father-name').value  || '—';
@@ -289,11 +337,9 @@ function generateReport() {
   const day        = document.getElementById('dob-day').value;
   const month      = document.getElementById('dob-month').value;
   const year       = document.getElementById('dob-year').value;
-  const dobStr     = (day && month && year) ? `${DZ_DAYS[day-1]} / ${DZ_MONTHS[month-1]} / ${year}` : '—';
 
-  let sectionsHTML = '';
-  let hasSections = false;
-
+  // Collect selected sections
+  const selectedSections = [];
   KYETSE_SECTIONS.forEach(sec => {
     const togEl = document.getElementById('tog-' + sec.id);
     if (togEl && !togEl.checked) return;
@@ -301,18 +347,10 @@ function generateReport() {
     if (!selEl || !selEl.value) return;
     const row = db.find(r => normalize(r.category) === normalize(sec.category) && normalize(r.value) === normalize(selEl.value));
     if (!row) return;
-    hasSections = true;
-    sectionsHTML += `
-      <div class="report-section" id="rsec-${sec.id}">
-        <div class="report-section-header">
-          <span class="report-section-label">${sec.label}</span>
-          <span class="report-section-value">${selEl.value}</span>
-        </div>
-        <div class="report-section-body" contenteditable="true" id="rbody-${sec.id}">${row.interpretation}</div>
-      </div>`;
+    selectedSections.push({ sec, value: selEl.value, text: row.interpretation });
   });
 
-  if (!hasSections) {
+  if (selectedSections.length === 0) {
     document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་གནད་ཆ་འདེམས་ནས་<br>སྐྱེས་རྩིས་གསར་བཟོ་གནང་རོགས།</div></div>`;
     return;
   }
@@ -320,26 +358,42 @@ function generateReport() {
   const today = new Date().toLocaleDateString('en-GB');
   const reportNum = String(reportCounter).padStart(4, '0');
 
+  // Build the intro sentence
+  const introText = buildIntroSentence(name, fatherName, fatherYear, motherYear, day, month, year, age);
+
+  // Build selected values summary line (like the PDF: རེས་འགྲོགས་ཟླ་སྐར་... etc.)
+  const summaryParts = selectedSections.map(s => `${s.value}`).join('། ');
+
+  // Build flowing section prose (each section: ༈ label + value in parens + text)
+  let sectionsHTML = '';
+  selectedSections.forEach((s, idx) => {
+    const proseLbl = SECTION_PROSE_LABELS[s.sec.id] || s.sec.label;
+    sectionsHTML += `
+      <div class="report-section" id="rsec-${s.sec.id}">
+        <div class="prose-section-header">
+          <span class="prose-marker">༈</span>
+          <span class="prose-section-label">${proseLbl}</span>
+          <span class="prose-section-value">༼${s.value}༽</span>
+        </div>
+        <div class="report-section-body" contenteditable="true" id="rbody-${s.sec.id}">${s.text}</div>
+      </div>`;
+  });
+
   document.getElementById('report-doc').innerHTML = `
     <div class="report-header-block">
       <div class="report-mangalam">༄༅། །</div>
-      <div class="report-title">སྐྱེས་རྩིས་གཞུང་།</div>
-      <div class="report-sub">Report #${reportNum} &nbsp;|&nbsp; ${today}</div>
     </div>
 
-    <table class="report-info-table">
-      <tr><td>བུ་/བུམོའི་མིང་།</td><td>${name}</td></tr>
-      <tr><td>ཕའི་མིང་།</td><td>${fatherName}</td></tr>
-      <tr><td>ཕའི་སྐྱེས་ལོ།</td><td>${fatherYear}</td></tr>
-      <tr><td>མའི་སྐྱེས་ལོ།</td><td>${motherYear}</td></tr>
-      <tr><td>སྐྱེས་ཚེས།</td><td>${dobStr}</td></tr>
-      <tr><td>ལོ་ཚད།</td><td>${age} ལོ།</td></tr>
-    </table>
+    <div class="report-intro-block">
+      <p class="report-intro-text" id="report-intro-text">${introText}</p>
+      ${summaryParts ? `<p class="report-summary-line">${summaryParts}</p>` : ''}
+    </div>
 
     ${sectionsHTML}
 
     <div class="report-footer">
-      སརྦ་མངྒལཾ། &nbsp;། །&nbsp; ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག།
+      དེང་འདིར་མི་མཐུན་རྒུད་པ་ཀུན་ཞི་ནས། མཐུན་རྐྱེན་ཚེ་བསོད་བདེ་ལེགས་གོང་དུ་འཕེལ། །
+      ཇི་ལྟར་བསམ་པ་ཡིད་བཞིན་ལྷུན་གྱིས་གྲུབ། །ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག། སརྦ་མངྒལཾ།།  །།
     </div>`;
 
   showStatus('✅ སྐྱེས་རྩིས་གསར་བཟོ་ཚར་ཡི།');
@@ -535,11 +589,18 @@ function xmlEsc(s) {
 }
 
 function wPara(opts) {
-  // opts: { text, font, size, bold, color, align, spBefore, spAfter, borderBottom, borderTop, shade, italic }
+  // opts: { text, font, size, bold, color, align, spBefore, spAfter, borderBottom, borderTop, shade, italic, lineSpacing }
   const pPr = [];
   if (opts.align) pPr.push(`<w:jc w:val="${opts.align}"/>`);
-  if (opts.spBefore != null || opts.spAfter != null) {
-    pPr.push(`<w:spacing w:before="${opts.spBefore||0}" w:after="${opts.spAfter||0}"/>`);
+  const hasBefore = opts.spBefore != null;
+  const hasAfter  = opts.spAfter  != null;
+  const hasLine   = opts.lineSpacing != null;
+  if (hasBefore || hasAfter || hasLine) {
+    let spacingAttr = '';
+    if (hasBefore) spacingAttr += ` w:before="${opts.spBefore}"`;
+    if (hasAfter)  spacingAttr += ` w:after="${opts.spAfter}"`;
+    if (hasLine)   spacingAttr += ` w:line="${opts.lineSpacing}" w:lineRule="auto"`;
+    pPr.push(`<w:spacing${spacingAttr}/>`);
   }
   if (opts.borderBottom) {
     pPr.push(`<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="${opts.borderBottom}"/></w:pBdr>`);
@@ -596,7 +657,7 @@ function wTable(rows, colWidths) {
   </w:tbl>`;
 }
 
-/* ══ Export DOCX ══ */
+/* ══ Export DOCX (PDF-template style: flowing prose) ══ */
 async function exportDOCX() {
   const reportEl = document.getElementById('report-doc');
   if (reportEl.querySelector('.report-empty')) { showStatus('⚠ སྐྱེས་རྩིས་གསརཔ་བཟོ་མ་ཚུགས།'); return; }
@@ -612,69 +673,89 @@ async function exportDOCX() {
     const day        = document.getElementById('dob-day').value;
     const month      = document.getElementById('dob-month').value;
     const year       = document.getElementById('dob-year').value;
-    const dobStr     = (day && month && year) ? `${DZ_DAYS[day-1]} / ${DZ_MONTHS[month-1]} / ${year}` : '—';
-    const today      = new Date().toLocaleDateString('en-GB');
 
+    // Collect sections from rendered report (respects any user edits in contenteditable)
     const sections = [];
     KYETSE_SECTIONS.forEach(s => {
       const togEl = document.getElementById('tog-' + s.id);
       if (togEl && !togEl.checked) return;
-      const body   = document.getElementById('rbody-' + s.id);
-      const header = document.querySelector(`#rsec-${s.id} .report-section-value`);
-      if (body && header) {
-        sections.push({ label: s.label, value: header.textContent, text: body.innerText });
+      const bodyEl  = document.getElementById('rbody-' + s.id);
+      const valEl   = document.querySelector(`#rsec-${s.id} .prose-section-value`);
+      if (bodyEl && valEl) {
+        // Strip the ༼ ༽ wrappers from the value display
+        const rawVal = valEl.textContent.replace(/^༼|༽$/g,'').trim();
+        sections.push({
+          id: s.id,
+          proseLabel: SECTION_PROSE_LABELS[s.id] || s.label,
+          value: rawVal,
+          text: bodyEl.innerText
+        });
       }
     });
 
-    const FONT  = 'Noto Serif Tibetan';
+    const FONT   = 'Noto Serif Tibetan';
     const MAROON = '6B1A1A';
     const GOLD   = 'C9922A';
     const MUTED  = '7A6A50';
     const DARK   = '1C1008';
     const CREAM  = 'FDF7EC';
-    const LTGOLD = 'F5E6C8';
+    const RED_BORDER = 'AA0000';
 
     // ── Build body XML ──
     let body = '';
 
-    // Header
-    body += wPara({ text: '༄༅། །', font: FONT, size: 36, bold: true, color: MAROON, align: 'center', spBefore: 0, spAfter: 60 });
-    body += wPara({ text: 'སྐྱེས་རྩིས་གཞུང་།', font: FONT, size: 44, bold: true, color: MAROON, align: 'center', spBefore: 0, spAfter: 60 });
-    body += wPara({ text: `Kyetse Report  |  ${today}`, font: 'Arial', size: 20, color: MUTED, align: 'center', spBefore: 0, spAfter: 200, borderBottom: GOLD });
-    body += wPara({ text: '', spBefore: 120, spAfter: 120 });
+    // ── Opening: ༄༅། ། centered (matches PDF) ──
+    body += wPara({ text: '༄༅།  །', font: FONT, size: 32, bold: true, color: DARK, align: 'center', spBefore: 0, spAfter: 240 });
 
-    // Info table
-    body += wTable([
-      [{ text: 'བུ་/བུམོའི་མིང་།', font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: name,       font: FONT, size: 22, color: DARK }],
-      [{ text: 'ཕའི་མིང་།',        font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: fatherName, font: FONT, size: 22, color: DARK }],
-      [{ text: 'ཕའི་སྐྱེས་ལོ།',    font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: fatherYear, font: FONT, size: 22, color: DARK }],
-      [{ text: 'མའི་སྐྱེས་ལོ།',    font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: motherYear, font: FONT, size: 22, color: DARK }],
-      [{ text: 'སྐྱེས་ཚེས།',        font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: dobStr,     font: FONT, size: 22, color: DARK }],
-      [{ text: 'ལོ་ཚད།',            font: FONT, size: 22, bold: true, color: MUTED, shade: CREAM }, { text: age + ' ལོ།', font: FONT, size: 22, color: DARK }],
-    ], [4000, 5360]);
+    // ── Invocation prayer paragraph ──
+    const invocation = `ཨོཾ་སྭ་སྟི། སྤང་རྟོགས་ཡོན་ཏན་མཆོག་གི་རྩེར་སོར་ཅིང་། །ལེགས་གསུངས་དམ་པས་ཆོས་ཀྱི་བདུད་རྩི་ཡིས། །འགྲོ་ཀུན་འཕགས་པའི་ས་ལ་དགོན་མཛད་པའི། །ངོ་མཚར་འབུམ་ལྡན་མཆོག་གསུམ་དམ་པས་སྲུངས། །སྐྱེ་དགུའི་ཡིད་ཀྱི་ཀུན་དན་བཞད་པའི་གཉེན། །འགྲོ་འདུལ་འཇམ་དབྱངས་བླ་མས་དགེ་ལེགས་སྩོལ། །ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།`;
+    body += wPara({ text: invocation, font: FONT, size: 22, color: DARK, spBefore: 0, spAfter: 120, lineSpacing: 360 });
 
-    // Sections
-    sections.forEach(sec => {
-      body += wPara({ text: '', spBefore: 240, spAfter: 100 });
-      body += wTable([
-        [
-          { text: sec.label, font: FONT, size: 24, bold: true, color: MAROON, shade: CREAM },
-          { text: sec.value, font: FONT, size: 20, color: LTGOLD, align: 'right', shade: MAROON }
-        ]
-      ], [6000, 3360]);
+    // ── Intro sentence: father/mother/child details ──
+    let introLine = `དེ་ཡང་ཕ་`;
+    if (fatherName && fatherName !== '—') introLine += `${fatherName}་`;
+    if (fatherYear && fatherYear !== '—') introLine += `ས་${fatherYear}་`;
+    if (age && age !== '—') introLine += `རང་ལོ་${age}་`;
+    introLine += `དང་མ་`;
+    if (motherYear && motherYear !== '—') introLine += `ལྕགས་${motherYear}་`;
+    introLine += `ཁར་སོན་པ་གཉིས་ལ་བུ་`;
+    if (name && name !== '—') introLine += `${name}་`;
+    if (day && month && year) {
+      introLine += `ལོ་ཟླ་བ་${DZ_MONTHS[month-1]}ཚེས་${DZ_DAYS[day-1]}་`;
+    }
+    introLine += `དུས་ཚོད་ཐོག་བཙས་པའི་བུ་འདི་ཉིད།`;
+
+    // Append the value summary (like the PDF: རེས་འགྲོགས་ཟླ་སྐར་རགས་པ་ལག་ལ། ...)
+    if (sections.length > 0) {
+      introLine += ` ${sections.map(s => s.value).join('། ')}།`;
+    }
+    introLine += ` བཅས་ཀྱི་འབྲས་བུ་ཞིབ་ཏུ་བསྟན་པ་ནི།`;
+
+    body += wPara({ text: introLine, font: FONT, size: 22, color: DARK, spBefore: 0, spAfter: 200, lineSpacing: 360 });
+
+    // ── Each Kyetse section as flowing prose ──
+    sections.forEach((sec, idx) => {
+      // Section header line: ༈ + prose label + ༼value༽
+      const headerText = `༈  ${sec.proseLabel}  ༼${sec.value}༽`;
+      body += wPara({ text: headerText, font: FONT, size: 22, bold: true, color: MAROON, spBefore: 200, spAfter: 80 });
+
+      // Section body text - each line as a paragraph
       const lines = sec.text.split('\n').filter(l => l.trim());
-      lines.forEach(line => {
-        body += wPara({ text: line, font: FONT, size: 22, color: DARK, spBefore: 40, spAfter: 40 });
-      });
-      body += wPara({ text: '', spBefore: 80, spAfter: 0, borderBottom: 'D9C9A3' });
+      if (lines.length === 0) {
+        body += wPara({ text: sec.text.trim(), font: FONT, size: 22, color: DARK, spBefore: 0, spAfter: 80, lineSpacing: 360 });
+      } else {
+        lines.forEach(line => {
+          body += wPara({ text: line, font: FONT, size: 22, color: DARK, spBefore: 0, spAfter: 60, lineSpacing: 360 });
+        });
+      }
     });
 
-    // Footer
+    // ── Closing verse (matches PDF exactly) ──
     body += wPara({ text: '', spBefore: 200, spAfter: 0 });
     body += wPara({
-      text: 'སརྦ་མངྒལཾ།  །།  ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག།',
-      font: FONT, size: 20, color: MUTED, align: 'center',
-      spBefore: 200, spAfter: 0, borderTop: GOLD
+      text: 'དེང་འདིར་མི་མཐུན་རྒུད་པ་ཀུན་ཞི་ནས། །མཐུན་རྐྱེན་ཚེ་བསོད་བདེ་ལེགས་གོང་དུ་འཕེལ། །ཇི་ལྟར་བསམ་པ་ཡིད་བཞིན་ལྷུན་གྱིས་གྲུབ། །ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག། སརྦ་མངྒལཾ།། །།',
+      font: FONT, size: 22, color: DARK, align: 'center',
+      spBefore: 160, spAfter: 0, borderTop: GOLD
     });
 
     // ── Assemble document.xml ──
