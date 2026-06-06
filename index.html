@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>སྐྱེས་རྩིས་འབྲི་ས། — Kyetse Generator</title>
+  <title>སྐྱེས་རྩིས་བསྐྲུན་ཁང་། — Kyetse Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <header class="app-header">
   <div class="header-inner">
     <div>
-      <div class="header-title">༄༅། །སྐྱེས་རྩིས་འབྲི་ས།</div>
+      <div class="header-title">༄༅། །སྐྱེས་རྩིས་བསྐྲུན་ཁང་།</div>
       <div class="header-sub">Kyetse Generator</div>
     </div>
     <div class="header-badge" id="sheet-status">⏳ Loading Sheet…</div>
@@ -32,58 +32,84 @@
         <div class="card-header-title">སྤྱིར་བཏང་གནས་ཚུལ།</div>
       </div>
       <div class="card-body">
-        <div class="form-row full">
+
+        <div class="form-row">
           <div class="field">
             <label>བུ་/བུམོའི་མིང་།</label>
             <input type="text" id="child-name" placeholder="མིང་བཙུགས།">
           </div>
+          <div class="field">
+            <label>ལོ་ཚད།</label>
+            <input type="text" id="child-age" placeholder="ལོ་ཚད་བཙུགས།">
+          </div>
         </div>
-        <div class="form-row full">
+
+        <div class="form-row">
           <div class="field">
             <label>ཕའི་མིང་།</label>
             <input type="text" id="father-name" placeholder="ཕའི་མིང་བཙུགས།">
           </div>
+          <div class="field">
+            <label>མའི་མིང་།</label>
+            <input type="text" id="mother-name" placeholder="མའི་མིང་བཙུགས།">
+          </div>
         </div>
+
         <div class="form-row">
           <div class="field">
             <label>ཕའི་སྐྱེས་ལོ།</label>
-            <select id="father-year">
-              <option value="">ལོ་གདམ་ཁ་རྐྱབ།</option>
-            </select>
+            <input type="text" id="father-year" placeholder="དཔེར་ན། ས་ཕོ་གླང།">
           </div>
           <div class="field">
             <label>མའི་སྐྱེས་ལོ།</label>
-            <select id="mother-year">
-              <option value="">ལོ་གདམ་ཁ་རྐྱབ།</option>
-            </select>
+            <input type="text" id="mother-year" placeholder="དཔེར་ན། ཤིང་མོ་ཡོས།">
           </div>
         </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>ཕའི་ལོ་ཚད།</label>
+            <input type="text" id="father-age" placeholder="ཕའི་ལོ་ཚད།">
+          </div>
+          <div class="field">
+            <label>མའི་ལོ་ཚད།</label>
+            <input type="text" id="mother-age" placeholder="མའི་ལོ་ཚད།">
+          </div>
+        </div>
+
         <div class="form-row triple">
           <div class="field">
-            <label>སྐྱེས་བའི་ཉིནམ། (ཚེས)</label>
-            <select id="dob-day">
-              <option value="">ཚེས།</option>
-            </select>
+            <label>སྐྱེས་ཚེས། (ཉིན)</label>
+            <input type="text" id="dob-day" placeholder="དཔེར་ན། ༡༥">
           </div>
           <div class="field">
-            <label>སྐྱེས་བའི་སྤྱི་ཟླ།</label>
-            <select id="dob-month">
-              <option value="">ཟླ།</option>
-            </select>
+            <label>སྐྱེས་ཟླ།</label>
+            <input type="text" id="dob-month" placeholder="དཔེར་ན། ཟླ་བ་གསུམ་པ།">
           </div>
           <div class="field">
-            <label>སྐྱེས་བའི་ལོ།</label>
-            <select id="dob-year">
-              <option value="">ལོ།</option>
-            </select>
+            <label>སྐྱེས་ལོ།</label>
+            <input type="text" id="dob-year" placeholder="དཔེར་ན། ༢༠༢༤">
           </div>
         </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>གནས་ཡུལ། (སྐྱེས་ས)</label>
+            <input type="text" id="birth-place" placeholder="སྐྱེས་ས་བཙུགས།">
+          </div>
+          <div class="field">
+            <label>ད་ལྟའི་གནས་ཡུལ།</label>
+            <input type="text" id="current-place" placeholder="ད་ལྟའི་གནས་ས།">
+          </div>
+        </div>
+
         <div class="form-row full">
           <div class="field">
-            <label>ལོ་ཚད། (གྲངས)</label>
-            <input type="number" id="child-age" placeholder="ལོ་ཚད།" min="0" max="120">
+            <label>གཞན་གནས་ཚུལ། (ད་དུང་ཅི་ཡང་བྲིས།)</label>
+            <textarea id="extra-notes" placeholder="གཞན་གནས་ཚུལ་གང་རུང་འདིར་བཙུགས།" rows="3" style="font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;width:100%;resize:vertical;outline:none;color:var(--dark);background:var(--white);"></textarea>
           </div>
         </div>
+
       </div>
     </div>
 
