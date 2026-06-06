@@ -253,54 +253,73 @@ body {
 #report-doc {
   font-family: 'Jomolhari', serif;
   color: var(--dark);
-  line-height: 1.9;
+  line-height: 2.0;
 }
 .report-header-block {
   text-align: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 0;
+  border-bottom: none;
 }
-.report-mangalam { font-size: 18px; color: var(--maroon); font-weight: 700; margin-bottom: 4px; }
+.report-mangalam { font-size: 20px; color: var(--dark); font-weight: 700; margin-bottom: 0; }
 .report-title { font-size: 22px; font-weight: 700; color: var(--maroon); }
 .report-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-.report-info-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  font-size: 13px;
+/* ── Prose intro block ── */
+.report-intro-block {
+  margin-bottom: 16px;
 }
-.report-info-table td { padding: 5px 8px; vertical-align: top; }
-.report-info-table td:first-child { color: var(--muted); width: 45%; font-weight: 600; }
-.report-info-table tr { border-bottom: 1px dashed var(--border); }
+.report-intro-text {
+  font-size: 13.5px;
+  line-height: 2.0;
+  color: var(--dark);
+  text-align: justify;
+  margin-bottom: 6px;
+}
+.report-summary-line {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
 
+/* ── Prose section (matches PDF: ༈ header + flowing text) ── */
 .report-section {
-  margin-bottom: 18px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
+  margin-bottom: 14px;
 }
-.report-section-header {
-  background: var(--gold-pale);
-  border-bottom: 1px solid var(--border);
-  padding: 8px 14px;
+.prose-section-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
 }
-.report-section-label { font-size: 13px; font-weight: 700; color: var(--maroon); }
-.report-section-value { font-size: 12px; color: var(--gold); background: var(--maroon); padding: 2px 8px; border-radius: 10px; }
-.report-section-body {
-  padding: 12px 14px;
+.prose-marker {
+  font-size: 15px;
+  color: var(--maroon);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.prose-section-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--maroon);
+}
+.prose-section-value {
   font-size: 13px;
-  line-height: 1.9;
+  color: var(--dark);
+  font-weight: 400;
+}
+.report-section-body {
+  font-size: 13.5px;
+  line-height: 2.0;
   color: var(--dark);
   outline: none;
+  text-align: justify;
+  padding-left: 4px;
 }
 .report-section-body[contenteditable="true"]:focus {
   background: #FFFDF5;
+  border-radius: 4px;
 }
 
 .report-empty {
@@ -316,8 +335,9 @@ body {
   margin-top: 24px;
   padding-top: 16px;
   border-top: 2px solid var(--gold);
-  font-size: 12px;
-  color: var(--muted);
+  font-size: 13px;
+  color: var(--dark);
+  line-height: 2.0;
 }
 
 /* ── Section toggle checkboxes ── */
