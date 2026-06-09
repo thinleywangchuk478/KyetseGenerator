@@ -33,43 +33,27 @@
       </div>
       <div class="card-body">
 
+        <!-- Father row -->
         <div class="form-row">
           <div class="field">
-            <label>བུ་/བུམོའི་མིང་།</label>
-            <input type="text" id="child-name" placeholder="མིང་བཙུགས།">
+            <label>ཕའི་སྐྱེས་ལོ། (ལོ་སྐོར)</label>
+            <select id="father-animal-year">
+              <option value="">-- འདེམས། --</option>
+            </select>
           </div>
-          <div class="field">
-            <label>ལོ་ཚད།</label>
-            <input type="text" id="child-age" placeholder="ལོ་ཚད་བཙུགས།">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label>ཕའི་མིང་།</label>
-            <input type="text" id="father-name" placeholder="ཕའི་མིང་བཙུགས།">
-          </div>
-          <div class="field">
-            <label>མའི་མིང་།</label>
-            <input type="text" id="mother-name" placeholder="མའི་མིང་བཙུགས།">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label>ཕའི་སྐྱེས་ལོ།</label>
-            <input type="text" id="father-year" placeholder="དཔེར་ན། ས་ཕོ་གླང།">
-          </div>
-          <div class="field">
-            <label>མའི་སྐྱེས་ལོ།</label>
-            <input type="text" id="mother-year" placeholder="དཔེར་ན། ཤིང་མོ་ཡོས།">
-          </div>
-        </div>
-
-        <div class="form-row">
           <div class="field">
             <label>ཕའི་ལོ་ཚད།</label>
             <input type="text" id="father-age" placeholder="ཕའི་ལོ་ཚད།">
+          </div>
+        </div>
+
+        <!-- Mother row -->
+        <div class="form-row">
+          <div class="field">
+            <label>མའི་སྐྱེས་ལོ། (ལོ་སྐོར)</label>
+            <select id="mother-animal-year">
+              <option value="">-- འདེམས། --</option>
+            </select>
           </div>
           <div class="field">
             <label>མའི་ལོ་ཚད།</label>
@@ -77,14 +61,15 @@
           </div>
         </div>
 
-        <div class="form-row triple">
+        <!-- Child gender -->
+        <div class="form-row">
           <div class="field">
-            <label>སྐྱེས་ཚེས། (ཉིན)</label>
-            <input type="text" id="dob-day" placeholder="དཔེར་ན། ༡༥">
-          </div>
-          <div class="field">
-            <label>སྐྱེས་ཟླ།</label>
-            <input type="text" id="dob-month" placeholder="དཔེར་ན། ཟླ་བ་གསུམ་པ།">
+            <label>བུའམ་བུ་མོ།</label>
+            <select id="child-gender">
+              <option value="">-- འདེམས། --</option>
+              <option value="བུ">བུ</option>
+              <option value="བུ་མོ">བུ་མོ</option>
+            </select>
           </div>
           <div class="field">
             <label>སྐྱེས་ལོ།</label>
@@ -92,21 +77,23 @@
           </div>
         </div>
 
+        <!-- Birth date & month -->
         <div class="form-row">
           <div class="field">
-            <label>གནས་ཡུལ། (སྐྱེས་ས)</label>
-            <input type="text" id="birth-place" placeholder="སྐྱེས་ས་བཙུགས།">
+            <label>ཟླ་བ། (སྐྱེས་ཟླ)</label>
+            <input type="text" id="dob-month" placeholder="དཔེར་ན། ཟླ་བ་གསུམ་པ།">
           </div>
           <div class="field">
-            <label>ད་ལྟའི་གནས་ཡུལ།</label>
-            <input type="text" id="current-place" placeholder="ད་ལྟའི་གནས་ས།">
+            <label>ཚེས། (སྐྱེས་ཚེས)</label>
+            <input type="text" id="dob-day" placeholder="དཔེར་ན། ༡༥">
           </div>
         </div>
 
+        <!-- Timing animal -->
         <div class="form-row full">
           <div class="field">
-            <label>གཞན་གནས་ཚུལ། (ཁ་སྐོང་ཡོད་ན་བྲིས།)</label>
-            <textarea id="extra-notes" placeholder="གཞན་གནས་ཚུལ་གང་རུང་འདིར་བཙུགས།" rows="3" style="font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;width:100%;resize:vertical;outline:none;color:var(--dark);background:var(--white);"></textarea>
+            <label>དུས་ཚོད་ཀྱི་ལོ་སྐོར།</label>
+            <input type="text" id="timing-animal" placeholder="དཔེར་ན། ལུག་སྔ་ཆ། / འབྲུག་ཕྱི་ཆ།">
           </div>
         </div>
 
@@ -152,7 +139,7 @@
   <div class="right-panel">
     <div class="card">
       <div class="preview-toolbar">
-        <div class="preview-toolbar-title">📄 སྐྱེས་རྩིས་འབྲི་ས།</div>
+        <div class="preview-toolbar-title">📄 སྐྱེས་རྩིས་ཤོག་གྲངས།</div>
         <div class="btn-row" style="margin:0">
           <button class="btn btn-sm btn-gold" onclick="exportDOCX()">⬇ Word (.docx)</button>
           <button class="btn btn-sm btn-outline" onclick="window.print()">🖨 Print</button>
