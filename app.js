@@ -229,7 +229,7 @@ function buildKyetseDropdowns() {
     div.innerHTML = `<label>${sec.label}</label>`;
     const sel = document.createElement('select');
     sel.id = 'ks-' + sec.id;
-    sel.innerHTML = `<option value="">---</option>`;
+    sel.innerHTML = `<option value="">-- འདེམས། --</option>`;
     opts.forEach(o => {
       const opt = document.createElement('option');
       opt.value = o.value;
@@ -301,7 +301,7 @@ const SECTION_PROSE_LABELS = {
 /* ══ Build the opening intro sentence matching PDF template ══ */
 function buildIntroSentence(name, fatherName, fatherYear, motherYear, day, month, year, age) {
   // e.g. "ཨོཾ་སྭ་སྟི། ... ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།
-  //       དེ་ཡང་ཕ་ས་... རང་ལོ་XX དང་མ་...རང་ལོ་XX ཁར་སོན་པ་གཉིས་ལ་བུ་..."
+  //       དེ་ཡང་ཕ་་... རང་ལོ་XX དང་མ་...རང་ལོ་XX ཁར་སོན་པ་གཉིས་ལ་བུ་..."
   const dobPart = (day && month && year)
     ? `ཟླ་བ་${DZ_MONTHS[month-1]}ཚེས་${DZ_DAYS[day-1]}`
     : '';
