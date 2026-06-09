@@ -229,7 +229,7 @@ function buildKyetseDropdowns() {
     div.innerHTML = `<label>${sec.label}</label>`;
     const sel = document.createElement('select');
     sel.id = 'ks-' + sec.id;
-    sel.innerHTML = `<option value="">-- འདེམས། --</option>`;
+    sel.innerHTML = `<option value="">---</option>`;
     opts.forEach(o => {
       const opt = document.createElement('option');
       opt.value = o.value;
