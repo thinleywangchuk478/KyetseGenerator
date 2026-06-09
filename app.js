@@ -99,30 +99,19 @@ window.onload = function() {
 };
 
 function populateYearDropdowns() {
-  const now = new Date().getFullYear();
-  ['father-year','mother-year','dob-year'].forEach(id => {
+  ['father-animal-year','mother-animal-year'].forEach(id => {
     const sel = document.getElementById(id);
-    for (let y = now; y >= now - 100; y--) {
+    if (!sel) return;
+    BIRTH_YEARS.forEach(y => {
       const opt = document.createElement('option');
       opt.value = y; opt.textContent = y;
       sel.appendChild(opt);
-    }
+    });
   });
 }
 
 function populateDOBDropdowns() {
-  const dayEl = document.getElementById('dob-day');
-  DZ_DAYS.forEach((d,i) => {
-    const opt = document.createElement('option');
-    opt.value = i+1; opt.textContent = d;
-    dayEl.appendChild(opt);
-  });
-  const monEl = document.getElementById('dob-month');
-  DZ_MONTHS.forEach((m,i) => {
-    const opt = document.createElement('option');
-    opt.value = i+1; opt.textContent = m;
-    monEl.appendChild(opt);
-  });
+  // dob-day and dob-month are now plain text inputs; nothing to populate
 }
 
 /* ══ Load data from Sheet or Dummy ══ */
@@ -229,7 +218,7 @@ function buildKyetseDropdowns() {
     div.innerHTML = `<label>${sec.label}</label>`;
     const sel = document.createElement('select');
     sel.id = 'ks-' + sec.id;
-    sel.innerHTML = `<option value="">-- འདེམས། --</option>`;
+    sel.innerHTML = `<option value="">----</option>`;
     opts.forEach(o => {
       const opt = document.createElement('option');
       opt.value = o.value;
@@ -267,7 +256,7 @@ function buildKyetseDropdowns() {
 
 /* ══ Auto preview on any change ══ */
 function autoPreview() {
-  if (document.getElementById('child-name').value || anyKyetseSelected()) {
+  if (document.getElementById('father-animal-year').value || document.getElementById('child-gender').value || anyKyetseSelected()) {
     generateReport();
   }
 }
@@ -299,44 +288,43 @@ const SECTION_PROSE_LABELS = {
 };
 
 /* ══ Build the opening intro sentence matching PDF template ══ */
-function buildIntroSentence(name, fatherName, fatherYear, motherYear, day, month, year, age) {
-  // e.g. "ཨོཾ་སྭ་སྟི། ... ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།
-  //       དེ་ཡང་ཕ་་... རང་ལོ་XX དང་མ་...རང་ལོ་XX ཁར་སོན་པ་གཉིས་ལ་བུ་..."
-  const dobPart = (day && month && year)
-    ? `ཟླ་བ་${DZ_MONTHS[month-1]}ཚེས་${DZ_DAYS[day-1]}`
-    : '';
-  const agePart = age ? `རང་ལོ་${age}` : '';
+function buildIntroSentence(fatherAnimalYear, fatherAge, motherAnimalYear, motherAge, gender, dobYear, dobMonth, dobDay, timingAnimal) {
+  // Flow: དེ་ཡང་ཕ་[fatherAnimalYear]རང་ལོ་[fatherAge]དང་མ་[motherAnimalYear]རང་ལོ་[motherAge]
+  //       སོན་པ་གཉིས་ལ་[gender][dobYear]ལོ་ཟླ་བ་[dobMonth]པའི་ཚེས་[dobDay]དུས་ཚོད་[timingAnimal]ཐོག་བཙས་པའི་[gender]འདི་ཉིད།
 
   let intro = `ཨོཾ་སྭ་སྟི། སྤང་རྟོགས་ཡོན་ཏན་མཆོག་གི་རྩེར་སོར་ཅིང་། །ལེགས་གསུངས་དམ་པས་ཆོས་ཀྱི་བདུད་རྩི་ཡིས། །འགྲོ་ཀུན་འཕགས་པའི་ས་ལ་དགོན་མཛད་པའི། །ངོ་མཚར་འབུམ་ལྡན་མཆོག་གསུམ་དམ་པས་སྲུངས། །སྐྱེ་དགུའི་ཡིད་ཀྱི་ཀུན་དན་བཞད་པའི་གཉེན། །འགྲོ་འདུལ་འཇམ་དབྱངས་བླ་མས་དགེ་ལེགས་སྩོལ། །ཞེས་མཆོད་པར་བརྗོད་པའི་ལྷ་རྫས་ཀྱིས་མདུན་བསུས་ཏེ་སྐྱེས་རྩིས་ཤིག་འབྲི་བ་ལགས།`;
 
-  intro += ` དེ་ཡང་`;
-  if (fatherName && fatherName !== '—') {
-    intro += `ཕ་${fatherName}་`;
-  } else {
-    intro += `ཕ་`;
-  }
-  if (fatherYear && fatherYear !== '—') intro += `ས་${fatherYear}་`;
-  if (age && age !== '—') intro += `རང་ལོ་${age}་`;
+  intro += ` དེ་ཡང་ཕ་`;
+  if (fatherAnimalYear) intro += `${fatherAnimalYear}རང་ལོ་`;
+  if (fatherAge) intro += `${fatherAge}`;
   intro += `དང་མ་`;
-  if (motherYear && motherYear !== '—') intro += `ལྕགས་${motherYear}་`;
-  intro += `ཁར་སོན་པ་གཉིས་ལ་བུ་`;
-  if (name && name !== '—') intro += `${name}་`;
-  if (dobPart) intro += `${dobPart}་`;
-  intro += `དུས་ཚོད་ཐོག་བཙས་པའི་བུ་འདི་ཉིད།`;
+  if (motherAnimalYear) intro += `${motherAnimalYear}རང་ལོ་`;
+  if (motherAge) intro += `${motherAge}`;
+  intro += `སོན་པ་གཉིས་ལ་`;
+  if (gender) intro += `${gender}`;
+  if (dobYear) intro += `${dobYear}ལོ་`;
+  if (dobMonth) intro += `ཟླ་བ་${dobMonth}`;
+  if (dobDay) intro += `པའི་ཚེས་${dobDay}`;
+  intro += `དུས་ཚོད་`;
+  if (timingAnimal) intro += `${timingAnimal}`;
+  intro += `ཐོག་བཙས་པའི་`;
+  if (gender) intro += `${gender}`;
+  intro += `འདི་ཉིད།`;
 
   return intro;
 }
 
 /* ══ Generate Report (PDF-template style: flowing prose) ══ */
 function generateReport() {
-  const name       = document.getElementById('child-name').value   || '—';
-  const fatherName = document.getElementById('father-name').value  || '—';
-  const fatherYear = document.getElementById('father-year').value  || '—';
-  const motherYear = document.getElementById('mother-year').value  || '—';
-  const age        = document.getElementById('child-age').value    || '—';
-  const day        = document.getElementById('dob-day').value;
-  const month      = document.getElementById('dob-month').value;
-  const year       = document.getElementById('dob-year').value;
+  const fatherAnimalYear = document.getElementById('father-animal-year').value || '';
+  const fatherAge        = document.getElementById('father-age').value         || '';
+  const motherAnimalYear = document.getElementById('mother-animal-year').value || '';
+  const motherAge        = document.getElementById('mother-age').value         || '';
+  const gender           = document.getElementById('child-gender').value       || '';
+  const dobYear          = document.getElementById('dob-year').value           || '';
+  const dobMonth         = document.getElementById('dob-month').value         || '';
+  const dobDay           = document.getElementById('dob-day').value           || '';
+  const timingAnimal     = document.getElementById('timing-animal').value     || '';
 
   // Collect selected sections
   const selectedSections = [];
@@ -351,7 +339,7 @@ function generateReport() {
   });
 
   if (selectedSections.length === 0) {
-    document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་གནད་ཆ་འདེམས་ནས་<br>སྐྱེས་རྩིས་གསར་བཟོ་གནང་རོགས།</div></div>`;
+    document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་འབྲི་སའི་ཤོག་གུ།</div></div>`;
     return;
   }
 
@@ -359,7 +347,7 @@ function generateReport() {
   const reportNum = String(reportCounter).padStart(4, '0');
 
   // Build the intro sentence
-  const introText = buildIntroSentence(name, fatherName, fatherYear, motherYear, day, month, year, age);
+  const introText = buildIntroSentence(fatherAnimalYear, fatherAge, motherAnimalYear, motherAge, gender, dobYear, dobMonth, dobDay, timingAnimal);
 
   // Build selected values summary line (like the PDF: རེས་འགྲོགས་ཟླ་སྐར་... etc.)
   const summaryParts = selectedSections.map(s => `${s.value}`).join('། ');
@@ -401,7 +389,9 @@ function generateReport() {
 
 /* ══ Save Report ══ */
 function saveReport() {
-  const name = document.getElementById('child-name').value || 'མིང་མེད།';
+  const gender = document.getElementById('child-gender').value || '';
+  const dobYear = document.getElementById('dob-year').value || '';
+  const name = (gender || 'བུ་') + (dobYear ? '་' + dobYear : '') || 'མིང་མེད།';
   const doc = document.getElementById('report-doc');
   if (doc.querySelector('.report-empty')) { showStatus('⚠ སྐྱེས་རྩིས་གསརཔ་བཟོ་མ་ཚུགས།'); return; }
 
@@ -424,14 +414,15 @@ function saveReport() {
 
 function getInputSnapshot() {
   const snap = { personal: {}, kyetse: {} };
-  snap.personal.name       = document.getElementById('child-name').value;
-  snap.personal.fatherName = document.getElementById('father-name').value;
-  snap.personal.fatherYear = document.getElementById('father-year').value;
-  snap.personal.motherYear = document.getElementById('mother-year').value;
-  snap.personal.age        = document.getElementById('child-age').value;
-  snap.personal.day        = document.getElementById('dob-day').value;
-  snap.personal.month      = document.getElementById('dob-month').value;
-  snap.personal.year       = document.getElementById('dob-year').value;
+  snap.personal.fatherAnimalYear = document.getElementById('father-animal-year').value;
+  snap.personal.fatherAge        = document.getElementById('father-age').value;
+  snap.personal.motherAnimalYear = document.getElementById('mother-animal-year').value;
+  snap.personal.motherAge        = document.getElementById('mother-age').value;
+  snap.personal.gender           = document.getElementById('child-gender').value;
+  snap.personal.dobYear          = document.getElementById('dob-year').value;
+  snap.personal.dobMonth         = document.getElementById('dob-month').value;
+  snap.personal.dobDay           = document.getElementById('dob-day').value;
+  snap.personal.timingAnimal     = document.getElementById('timing-animal').value;
   KYETSE_SECTIONS.forEach(s => {
     const el = document.getElementById('ks-' + s.id);
     if (el) snap.kyetse[s.id] = el.value;
@@ -442,14 +433,15 @@ function getInputSnapshot() {
 function loadSnapshot(snap) {
   if (!snap) return;
   const p = snap.personal;
-  document.getElementById('child-name').value  = p.name       || '';
-  document.getElementById('father-name').value = p.fatherName || '';
-  document.getElementById('father-year').value = p.fatherYear || '';
-  document.getElementById('mother-year').value = p.motherYear || '';
-  document.getElementById('child-age').value   = p.age        || '';
-  document.getElementById('dob-day').value     = p.day        || '';
-  document.getElementById('dob-month').value   = p.month      || '';
-  document.getElementById('dob-year').value    = p.year       || '';
+  document.getElementById('father-animal-year').value = p.fatherAnimalYear || '';
+  document.getElementById('father-age').value         = p.fatherAge        || '';
+  document.getElementById('mother-animal-year').value = p.motherAnimalYear || '';
+  document.getElementById('mother-age').value         = p.motherAge        || '';
+  document.getElementById('child-gender').value       = p.gender           || '';
+  document.getElementById('dob-year').value           = p.dobYear          || '';
+  document.getElementById('dob-month').value          = p.dobMonth         || '';
+  document.getElementById('dob-day').value            = p.dobDay           || '';
+  document.getElementById('timing-animal').value      = p.timingAnimal     || '';
   KYETSE_SECTIONS.forEach(s => {
     const el = document.getElementById('ks-' + s.id);
     if (el && snap.kyetse) { el.value = snap.kyetse[s.id] || ''; el.classList.toggle('selected', !!el.value); }
@@ -665,14 +657,15 @@ async function exportDOCX() {
   showStatus('⏳ Word ཡིག་ཆ་གསར་བཟོ་བཞིན་པ།…');
 
   try {
-    const name       = document.getElementById('child-name').value   || '—';
-    const fatherName = document.getElementById('father-name').value  || '—';
-    const fatherYear = document.getElementById('father-year').value  || '—';
-    const motherYear = document.getElementById('mother-year').value  || '—';
-    const age        = document.getElementById('child-age').value    || '—';
-    const day        = document.getElementById('dob-day').value;
-    const month      = document.getElementById('dob-month').value;
-    const year       = document.getElementById('dob-year').value;
+    const fatherAnimalYear = document.getElementById('father-animal-year').value || '';
+    const fatherAge        = document.getElementById('father-age').value         || '';
+    const motherAnimalYear = document.getElementById('mother-animal-year').value || '';
+    const motherAge        = document.getElementById('mother-age').value         || '';
+    const gender           = document.getElementById('child-gender').value       || '';
+    const dobYear          = document.getElementById('dob-year').value           || '';
+    const dobMonth         = document.getElementById('dob-month').value         || '';
+    const dobDay           = document.getElementById('dob-day').value           || '';
+    const timingAnimal     = document.getElementById('timing-animal').value     || '';
 
     // Collect sections from rendered report (respects any user edits in contenteditable)
     const sections = [];
@@ -713,17 +706,21 @@ async function exportDOCX() {
 
     // ── Intro sentence: father/mother/child details ──
     let introLine = `དེ་ཡང་ཕ་`;
-    if (fatherName && fatherName !== '—') introLine += `${fatherName}་`;
-    if (fatherYear && fatherYear !== '—') introLine += `ས་${fatherYear}་`;
-    if (age && age !== '—') introLine += `རང་ལོ་${age}་`;
+    if (fatherAnimalYear) introLine += `${fatherAnimalYear}རང་ལོ་`;
+    if (fatherAge) introLine += `${fatherAge}`;
     introLine += `དང་མ་`;
-    if (motherYear && motherYear !== '—') introLine += `ལྕགས་${motherYear}་`;
-    introLine += `ཁར་སོན་པ་གཉིས་ལ་བུ་`;
-    if (name && name !== '—') introLine += `${name}་`;
-    if (day && month && year) {
-      introLine += `ལོ་ཟླ་བ་${DZ_MONTHS[month-1]}ཚེས་${DZ_DAYS[day-1]}་`;
-    }
-    introLine += `དུས་ཚོད་ཐོག་བཙས་པའི་བུ་འདི་ཉིད།`;
+    if (motherAnimalYear) introLine += `${motherAnimalYear}རང་ལོ་`;
+    if (motherAge) introLine += `${motherAge}`;
+    introLine += `སོན་པ་གཉིས་ལ་`;
+    if (gender) introLine += `${gender}`;
+    if (dobYear) introLine += `${dobYear}ལོ་`;
+    if (dobMonth) introLine += `ཟླ་བ་${dobMonth}`;
+    if (dobDay) introLine += `པའི་ཚེས་${dobDay}`;
+    introLine += `དུས་ཚོད་`;
+    if (timingAnimal) introLine += `${timingAnimal}`;
+    introLine += `ཐོག་བཙས་པའི་`;
+    if (gender) introLine += `${gender}`;
+    introLine += `འདི་ཉིད།`;
 
     // Append the value summary (like the PDF: རེས་འགྲོགས་ཟླ་སྐར་རགས་པ་ལག་ལ། ...)
     if (sections.length > 0) {
@@ -827,7 +824,7 @@ async function exportDOCX() {
     const blob = new Blob([zipBytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `Kyetse_${name.replace(/[\s།]+/g,'_')}_${new Date().toISOString().slice(0,10)}.docx`;
+    a.download = `Kyetse_${(gender||'bu')}_${dobYear||'unknown'}_${new Date().toISOString().slice(0,10)}.docx`;
     document.body.appendChild(a);
     a.click();
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
@@ -841,21 +838,22 @@ async function exportDOCX() {
 
 /* ══ Clear form ══ */
 function clearForm() {
-  document.getElementById('child-name').value  = '';
-  document.getElementById('father-name').value = '';
-  document.getElementById('father-year').value = '';
-  document.getElementById('mother-year').value = '';
-  document.getElementById('child-age').value   = '';
-  document.getElementById('dob-day').value     = '';
-  document.getElementById('dob-month').value   = '';
-  document.getElementById('dob-year').value    = '';
+  document.getElementById('father-animal-year').value = '';
+  document.getElementById('father-age').value         = '';
+  document.getElementById('mother-animal-year').value = '';
+  document.getElementById('mother-age').value         = '';
+  document.getElementById('child-gender').value       = '';
+  document.getElementById('dob-year').value           = '';
+  document.getElementById('dob-month').value          = '';
+  document.getElementById('dob-day').value            = '';
+  document.getElementById('timing-animal').value      = '';
   KYETSE_SECTIONS.forEach(s => {
     const el = document.getElementById('ks-' + s.id);
     if (el) { el.value = ''; el.classList.remove('selected'); }
     const hint = document.getElementById('hint-' + s.id);
     if (hint) hint.classList.remove('show');
   });
-  document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་གནད་ཆ་འདེམས་ནས་<br>སྐྱེས་རྩིས་གསར་བཟོ་གནང་རོགས།</div></div>`;
+  document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་འབྲི་སའི་ཤོག་གུ།</div></div>`;
 }
 
 function showStatus(msg) {
