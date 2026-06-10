@@ -55,21 +55,21 @@ const DUMMY_DATA = [
 
 /* ══ 15 Kyetse sections config ══ */
 const KYETSE_SECTIONS = [
-  { id: "lo",       label: "ལོའི་འབྲས་བུ།",        category: "ལོའི་འབྲས་བུ།" },
-  { id: "dawa",     label: "ཟླ་བའི་འབྲས་བུ།",      category: "ཟླ་བའི་འབྲས་བུ།" },
-  { id: "zhag",     label: "ཞག་/ཉི་མའི་འབྲས་བུ།",  category: "ཞག་གམ་ཉི་མའི་འབྲས་བུ།" },
-  { id: "dus",      label: "དུས་ཚོད་འབྲས་བུ།",     category: "དུས་ཚོད་འབྲས་བུ།" },
-  { id: "karma",    label: "སྐྱེ་བརྟག་འཁོར་ལོའི་འབྲས་བུ།",   category: "སྐྱེ་བརྟག་འཁོར་ལོའི་འབྲས་བུ།" },
-  { id: "reza",     label: "རེས་གཟའི་འབྲས་བུ།",    category: "རེས་གཟའི་འབྲས་བུ།" },
-  { id: "skar",     label: "སྐར་མའི་འབྲས་བུ།",     category: "སྐར་མའི་འབྲས་བུ།" },
-  { id: "dusjor",   label: "དུས་སྦྱོར་འབྲས་བུ།",   category: "དུས་སྦྱོར་འབྲས་བུ།" },
-  { id: "tatkal",   label: "ཏཏྐལ་འབྲས་བུ།",         category: "ཏཏྐལ་འབྲས་བུ།" },
-  { id: "tendrel",  label: "རྟེན་འབྲེལ་འབྲས་བུ།",  category: "རྟེན་འབྲེལ་འབྲས་བུ།" },
-  { id: "tshe",     label: "ཚེས་གྲངས་འབྲས་བུ།",    category: "ཚེས་གྲངས་འབྲས་བུ།" },
-  { id: "phama",    label: "ཕ་མ་མཐུན་སྦྱོར།",       category: "ཕ་མ་མཐུན་སྦྱོར།" },
-  { id: "parkha",   label: "སྤར་ཁའི་འབྲས་བུ།",     category: "སྤར་ཁའི་འབྲས་བུ།" },
-  { id: "sme",      label: "སྨེ་བའི་འབྲས་བུ།",      category: "སྨེ་བའི་འབྲས་བུ།" },
-  { id: "khandro",  label: "མཁའ་འགྲོའི་འབྲས་བུ།",  category: "མཁའ་འགྲོའི་འབྲས་བུ།" }
+  { id: "lo",       label: "ལོའི་འབྲས་བུ།",               category: "ལོ",        sheetCategory: "ལོའི་འབྲས་བུ།" },
+  { id: "dawa",     label: "ཟླ་བའི་འབྲས་བུ།",             category: "ཟླ",        sheetCategory: "ཟླ་བའི་འབྲས་བུ།" },
+  { id: "zhag",     label: "ཞག་/ཉི་མའི་འབྲས་བུ།",         category: "ཞག",        sheetCategory: "ཞག་གམ་ཉི་མའི་འབྲས་བུ།" },
+  { id: "dus",      label: "དུས་ཚོད་འབྲས་བུ།",            category: "དུས",       sheetCategory: "དུས་ཚོད་འབྲས་བུ།" },
+  { id: "karma",    label: "སྐྱེ་བརྟག་འཁོར་ལོའི་འབྲས་བུ།", category: "སྐར་མ",    sheetCategory: "སྐྱེ་བརྟག་འཁོར་ལོའི་འབྲས་བུ།" },
+  { id: "reza",     label: "རེས་གཟའི་འབྲས་བུ།",           category: "རེས་གཟའ",  sheetCategory: "རེས་གཟའི་འབྲས་བུ།" },
+  { id: "skar",     label: "སྐར་མའི་འབྲས་བུ།",            category: "སྐར་མ",    sheetCategory: "སྐར་མའི་འབྲས་བུ།" },
+  { id: "dusjor",   label: "དུས་སྦྱོར་འབྲས་བུ།",          category: "དུས་སྦྱོར", sheetCategory: "དུས་སྦྱོར་འབྲས་བུ།" },
+  { id: "tatkal",   label: "ཏཏྐལ་འབྲས་བུ།",               category: "ཏཏྐལ",      sheetCategory: "ཏཏྐལ་འབྲས་བུ།" },
+  { id: "tendrel",  label: "རྟེན་འབྲེལ་འབྲས་བུ།",         category: "རྟེན་འབྲེལ", sheetCategory: "རྟེན་འབྲེལ་འབྲས་བུ།" },
+  { id: "tshe",     label: "ཚེས་གྲངས་འབྲས་བུ།",           category: "ཚེས",       sheetCategory: "ཚེས་གྲངས་འབྲས་བུ།" },
+  { id: "phama",    label: "ཕ་མ་མཐུན་སྦྱོར།",             category: "ཕ་མ་མཐུན་སྦྱོར", sheetCategory: "ཕ་མ་མཐུན་སྦྱོར།" },
+  { id: "parkha",   label: "སྤར་ཁའི་འབྲས་བུ།",            category: "སྤར་ཁ",    sheetCategory: "སྤར་ཁའི་འབྲས་བུ།" },
+  { id: "sme",      label: "སྨེ་བའི་འབྲས་བུ།",            category: "སྨེ",       sheetCategory: "སྨེ་བའི་འབྲས་བུ།" },
+  { id: "khandro",  label: "མཁའ་འགྲོའི་འབྲས་བུ།",        category: "མཁའ་འགྲོ",  sheetCategory: "མཁའ་འགྲོའི་འབྲས་བུ།" }
 ];
 
 /* ══ Birth year options (Tibetan 60-year cycle) ══ */
@@ -99,15 +99,7 @@ window.onload = function() {
 };
 
 function populateYearDropdowns() {
-  ['father-animal-year','mother-animal-year'].forEach(id => {
-    const sel = document.getElementById(id);
-    if (!sel) return;
-    BIRTH_YEARS.forEach(y => {
-      const opt = document.createElement('option');
-      opt.value = y; opt.textContent = y;
-      sel.appendChild(opt);
-    });
-  });
+  // father-animal-year and mother-animal-year are now plain text inputs; nothing to populate
 }
 
 function populateDOBDropdowns() {
@@ -117,17 +109,43 @@ function populateDOBDropdowns() {
 /* ══ Load data from Sheet or Dummy ══ */
 async function loadData() {
   if (SHEET_CSV_URL && SHEET_CSV_URL.length > 10) {
+    let loaded = false;
+    // Try direct fetch first (works when sheet is published and CORS allows)
     try {
-      const res = await fetch(SHEET_CSV_URL);
+      const res = await fetch(SHEET_CSV_URL, { mode: 'cors' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const csv = await res.text();
-      db = parseCSV(csv);
-      const count = db.length;
-      document.getElementById('sheet-status').textContent = `✅ Sheet: ${count} rows`;
-      document.getElementById('sheet-status').style.background = '#2E6B3E';
-      document.getElementById('sheet-status').style.color = '#fff';
+      const parsed = parseCSV(csv);
+      if (parsed.length > 0) {
+        db = parsed;
+        loaded = true;
+        document.getElementById('sheet-status').textContent = `✅ Sheet: ${db.length} rows`;
+        document.getElementById('sheet-status').style.background = '#2E6B3E';
+        document.getElementById('sheet-status').style.color = '#fff';
+      }
     } catch(e) {
-      loadDummy();
+      console.warn('Direct sheet fetch failed:', e.message);
     }
+    // Fallback: try via allorigins CORS proxy
+    if (!loaded) {
+      try {
+        const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(SHEET_CSV_URL);
+        const res2 = await fetch(proxyUrl);
+        if (!res2.ok) throw new Error('Proxy HTTP ' + res2.status);
+        const json = await res2.json();
+        const parsed2 = parseCSV(json.contents);
+        if (parsed2.length > 0) {
+          db = parsed2;
+          loaded = true;
+          document.getElementById('sheet-status').textContent = `✅ Sheet (proxy): ${db.length} rows`;
+          document.getElementById('sheet-status').style.background = '#2E6B3E';
+          document.getElementById('sheet-status').style.color = '#fff';
+        }
+      } catch(e2) {
+        console.warn('Proxy sheet fetch also failed:', e2.message);
+      }
+    }
+    if (!loaded) loadDummy();
   } else {
     loadDummy();
   }
@@ -211,7 +229,10 @@ function buildKyetseDropdowns() {
   togglesEl.innerHTML = '';
 
   KYETSE_SECTIONS.forEach(sec => {
-    const opts = db.filter(r => normalize(r.category) === normalize(sec.category));
+    const opts = db.filter(r =>
+      normalize(r.category) === normalize(sec.category) ||
+      (sec.sheetCategory && normalize(r.category) === normalize(sec.sheetCategory))
+    );
 
     const div = document.createElement('div');
     div.className = 'kyetse-field';
@@ -235,7 +256,7 @@ function buildKyetseDropdowns() {
     hint.className = 'hint-box';
     hint.id = 'hint-' + sec.id;
     sel.addEventListener('change', function() {
-      const row = db.find(r => normalize(r.category) === normalize(sec.category) && normalize(r.value) === normalize(this.value));
+      const row = db.find(r => (normalize(r.category) === normalize(sec.category) || (sec.sheetCategory && normalize(r.category) === normalize(sec.sheetCategory))) && normalize(r.value) === normalize(this.value));
       if (row) {
         const short = row.interpretation.substring(0, 80) + (row.interpretation.length > 80 ? '…' : '');
         hint.textContent = short;
@@ -333,13 +354,13 @@ function generateReport() {
     if (togEl && !togEl.checked) return;
     const selEl = document.getElementById('ks-' + sec.id);
     if (!selEl || !selEl.value) return;
-    const row = db.find(r => normalize(r.category) === normalize(sec.category) && normalize(r.value) === normalize(selEl.value));
+    const row = db.find(r => (normalize(r.category) === normalize(sec.category) || (sec.sheetCategory && normalize(r.category) === normalize(sec.sheetCategory))) && normalize(r.value) === normalize(selEl.value));
     if (!row) return;
     selectedSections.push({ sec, value: selEl.value, text: row.interpretation });
   });
 
   if (selectedSections.length === 0) {
-    document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་འབྲི་སའི་ཤོག་གུ།</div></div>`;
+    document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་གནད་ཆ་འདེམས་ནས་<br>སྐྱེས་རྩིས་གསར་བཟོ་གནང་རོགས།</div></div>`;
     return;
   }
 
@@ -367,22 +388,60 @@ function generateReport() {
       </div>`;
   });
 
-  document.getElementById('report-doc').innerHTML = `
-    <div class="report-header-block">
-      <div class="report-mangalam">༄༅། །</div>
-    </div>
+  // ── Paginate: split sections across pages (~4 sections per page) ──
+  const SECS_PER_PAGE = 4;
+  const PAGE_LABELS = [
+    "གཅིག་","གཉིས་","གསུམ་","བཞི་","ལྔ་","དྲུག་","བདུན་","བརྒྱད་","དགུ་","བཅུ་"
+  ];
 
-    <div class="report-intro-block">
-      <p class="report-intro-text" id="report-intro-text">${introText}</p>
-      ${summaryParts ? `<p class="report-summary-line">${summaryParts}</p>` : ''}
-    </div>
+  // Page 1: header + intro + first N sections
+  let pagesHTML = '';
+  const totalSecs = selectedSections.length;
+  let secIdx = 0;
+  let pageNum = 0;
 
-    ${sectionsHTML}
+  while (secIdx < totalSecs || pageNum === 0) {
+    const label = PAGE_LABELS[pageNum] || `${pageNum+1}`;
+    const isFirst = pageNum === 0;
 
-    <div class="report-footer">
-      དེང་འདིར་མི་མཐུན་རྒུད་པ་ཀུན་ཞི་ནས། མཐུན་རྐྱེན་ཚེ་བསོད་བདེ་ལེགས་གོང་དུ་འཕེལ། །
-      ཇི་ལྟར་བསམ་པ་ཡིད་བཞིན་ལྷུན་གྱིས་གྲུབ། །ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག། སརྦ་མངྒལཾ།།  །།
+    // Build sections for this page
+    let pageSecHTML = '';
+    const pageEnd = isFirst
+      ? Math.min(secIdx + SECS_PER_PAGE, totalSecs)
+      : Math.min(secIdx + SECS_PER_PAGE, totalSecs);
+
+    // On page 1: include intro sentence; subsequent pages continue sections
+    for (let i = secIdx; i < pageEnd; i++) {
+      const s = selectedSections[i];
+      const proseLbl = SECTION_PROSE_LABELS[s.sec.id] || s.sec.label;
+      pageSecHTML += `<div class="report-section" id="rsec-${s.sec.id}">
+        <span class="prose-marker"> ༈ </span><span class="prose-section-label">${proseLbl}</span> <span class="prose-section-value">༼${s.value}༽</span>
+        <div class="report-section-body" contenteditable="true" id="rbody-${s.sec.id}">${s.text}</div>
+      </div>`;
+    }
+    secIdx = pageEnd;
+
+    const footerHTML = (secIdx >= totalSecs)
+      ? `<div class="report-footer">དེང་འདིར་མི་མཐུན་རྒུད་པ་ཀུན་ཞི་ནས། །མཐུན་རྐྱེན་ཚེ་བསོད་བདེ་ལེགས་གོང་དུ་འཕེལ། །ཇི་ལྟར་བསམ་པ་ཡིད་བཞིན་ལྷུན་གྱིས་གྲུབ། །ཕུན་ཚོགས་དཔལ་ཡོན་རྒྱས་པའི་བཀྲ་ཤིས་ཤོག། སརྦ་མངྒལཾ།། །།<br><span style="font-size:12px;color:var(--muted);">༼${PAGE_LABELS[pageNum] ? PAGE_LABELS[pageNum].replace('་','') + 'བྱོན།' : ''}༽</span></div>`
+      : `<div class="report-page-end">༼${label.replace('་','')}བྱོན།༽</div>`;
+
+    pagesHTML += `<div class="report-page">
+      <div class="report-page-inner">
+        <div class="report-page-header">
+          <span class="report-mangalam-left">༄༅། །</span>
+          <span class="report-page-number">༼${label}༽</span>
+        </div>
+        ${isFirst ? `<div class="report-intro-block"><p class="report-intro-text" contenteditable="true" id="report-intro-text">${introText}</p>${summaryParts ? `<p class="report-summary-line">${summaryParts}</p>` : ''}</div>` : ''}
+        ${pageSecHTML}
+        ${footerHTML}
+      </div>
     </div>`;
+
+    pageNum++;
+    if (secIdx >= totalSecs) break;
+  }
+
+  document.getElementById('report-doc').innerHTML = pagesHTML;
 
   showStatus('✅ སྐྱེས་རྩིས་གསར་བཟོ་ཚར་ཡི།');
 }
@@ -853,7 +912,7 @@ function clearForm() {
     const hint = document.getElementById('hint-' + s.id);
     if (hint) hint.classList.remove('show');
   });
-  document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་འབྲི་སའི་ཤོག་གུ།</div></div>`;
+  document.getElementById('report-doc').innerHTML = `<div class="report-empty"><div class="report-empty-icon">༄༅</div><div>སྐྱེས་རྩིས་གནད་ཆ་འདེམས་ནས་<br>སྐྱེས་རྩིས་གསར་བཟོ་གནང་རོགས།</div></div>`;
 }
 
 function showStatus(msg) {
